@@ -1,4 +1,5 @@
-import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
+import { UserRoleDTO } from './dtos/user-role.dto';
 import { UserRoleService } from './user-role.service';
 
 @Controller('user-role')
@@ -21,5 +22,28 @@ export class UserRoleController {
         return res.status(HttpStatus.OK).send(userRole);
     }
 
+    // Metodo POST 
+    @Post("add")
+    async addUserRole(@Res() res, @Body() createUserRolDTO: UserRoleDTO){
+        const userRole = await this.userRoleService.createUserRole(createUserRolDTO);
+        return res.status(HttpStatus.CREATED).send(userRole);
+    }
+
+    // Metodo Put
+    @Put("update/:user_role_id")
+    async updateUserRole(@Res() res, @Param("user_role_id") userRoleId: number, @Body() updateUserRoleDTO: UserRoleDTO){
+        const updateUser = await this.userRoleService.updateUserRole(userRoleId, updateUserRoleDTO);
+        return res.status(HttpStatus.OK).send(updateUser);    
+    }
+    
+    // Metodo Delete
+    @Delete("delete/:user_role_id")
+    async deleteUserROle(@Res() res, @Param("user_role_id") userRoleId ){
+        const deleteUserRole = await this.userRoleService.deleteUserRole(userRoleId);
+        if(!deleteUserRole) {
+            throw new NotFoundException('User Role not found');
+        }
+        return res.status(HttpStatus.OK).send(deleteUserRole);
+    }
 
 }

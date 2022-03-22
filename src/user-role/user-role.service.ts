@@ -18,15 +18,13 @@ export class UserRoleService {
 
     // Metodo para buscar TODOS los Roles de usuario
     async getUserRoleList(): Promise<UserRoleEntity[]>{
-        const userRoleList = await this.userRoleRepository.find({
-            relations: ['usersList'],
-        });
+        const userRoleList = await this.userRoleRepository.find();
         return userRoleList;
     }
 
     // Metodo para crear un rol de usuario
-    async createUserRole(createProductDTO: UserRoleDTO): Promise<UserRoleDTO>{
-        const userRole = this.userRoleRepository.save(createProductDTO);
+    async createUserRole(createUserRoleDTO: UserRoleDTO): Promise<UserRoleDTO>{
+        const userRole = this.userRoleRepository.save(createUserRoleDTO);
         return userRole;
     }
 
