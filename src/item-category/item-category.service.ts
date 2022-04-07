@@ -8,31 +8,31 @@ import { ItemCategoryEntity } from './entities/item-category.entity';
 export class ItemCategoryService {
 
     //Inyectar el repositorio
-    constructor(@InjectRepository(ItemCategoryEntity) private readonly userRepository: Repository<ItemCategoryEntity>) { }
+    constructor(@InjectRepository(ItemCategoryEntity) private readonly itemCategoryRepository: Repository<ItemCategoryEntity>) { }
 
     // Metodo para buscar una categoria de item por ID La relacion se indica en la clase Entity
-    async getItemCategoryById(userId: number): Promise<ItemCategoryEntity> {
-        const itemCategory = await this.userRepository.findOne({
-            where: { "category_id": userId }
+    async getItemCategoryById(itemCategoryId: number): Promise<ItemCategoryEntity> {
+        const itemCategory = await this.itemCategoryRepository.findOne({
+            where: { "category_id": itemCategoryId }
         });
         return itemCategory;
     }
 
     // Metodo para buscar TODOS las categorias de Items. La relacion es. La que se indica en la clase Entity
     async getItemCategoryList(): Promise<ItemCategoryEntity[]> {
-        const itemCategoryList = await this.userRepository.find({});
+        const itemCategoryList = await this.itemCategoryRepository.find({});
         return itemCategoryList;
     }
 
     // Metodo para crear una categoria de Item
     async createItemCategory(createItemCategoryDTO: ItemCategoryDTO): Promise<ItemCategoryDTO> {
-        const itemCategory = this.userRepository.save(createItemCategoryDTO);
+        const itemCategory = this.itemCategoryRepository.save(createItemCategoryDTO);
         return itemCategory;
     }
 
     // Metodo para actualizar una categoria de Item
     async updateItemCategory(itemCategoryId: number, ItemCategoryDTO: ItemCategoryDTO): Promise<any> {
-        const updatedItemCategory = await this.userRepository.update(itemCategoryId, ItemCategoryDTO);
+        const updatedItemCategory = await this.itemCategoryRepository.update(itemCategoryId, ItemCategoryDTO);
         return updatedItemCategory;
     }
 
@@ -43,7 +43,7 @@ export class ItemCategoryService {
             return null;
         }
         findItemCategory.category_status = false;
-        await this.userRepository.update(itemCategoryId, findItemCategory);
+        await this.itemCategoryRepository.update(itemCategoryId, findItemCategory);
         return findItemCategory;
     }
 }
