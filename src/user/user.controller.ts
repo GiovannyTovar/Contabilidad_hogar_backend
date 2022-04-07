@@ -12,6 +12,9 @@ export class UserController {
     @Get()
     async getUserList(@Res() res) {
         const userList = await this.userService.getUserList();
+        if(userList.length==0){
+            throw new NotFoundException('Users not found');
+        }
         return res.status(HttpStatus.OK).send(userList);
     }
 

@@ -1,5 +1,5 @@
 import { IncomeCategoryEntity } from "src/income-category/entities/income-category.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('income')
 export class IncomeEntity{
@@ -7,7 +7,8 @@ export class IncomeEntity{
     @PrimaryGeneratedColumn()
     income_id: number;
     
-    @Column({type: 'timestamp', default:() => 'CURRENT_TIMESTAMP'})
+    //@Column({type: 'timestamp', default:() => 'CURRENT_TIMESTAMP' })
+    @CreateDateColumn()
     income_date: Date;
 
     @Column()

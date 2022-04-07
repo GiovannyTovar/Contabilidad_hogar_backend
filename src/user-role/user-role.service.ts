@@ -19,7 +19,7 @@ export class UserRoleService {
     // Metodo para buscar TODOS los Roles de usuario
     async getUserRoleList(): Promise<UserRoleEntity[]>{
         const userRoleList = await this.userRoleRepository.find();
-        return userRoleList;
+        return userRoleList;        
     }
 
     // Metodo para crear un rol de usuario

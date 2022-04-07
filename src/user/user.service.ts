@@ -7,42 +7,42 @@ import { UserEntity } from './entities/user.entity';
 @Injectable()
 export class UserService {
 
-    
+
     //Inyectar el repositorio
-    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>){}
+    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) { }
 
     // Metodo para buscar un usuario por ID La relacion se indica en la clase Entity
-    async getUserById(userId: number): Promise<UserEntity>{
+    async getUserById(userId: number): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
-            where: { "user_id": userId},
+            where: { "user_id": userId },
             relations: ['role_id'],
         });
         return user;
     }
 
-     // Metodo para buscar un usuario por DNI La relacion se indica en la clase Entity
-     async getUserByDni(userDni: string): Promise<UserEntity>{
+    // Metodo para buscar un usuario por DNI La relacion se indica en la clase Entity
+    async getUserByDni(userDni: string): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
-            where: { "user_dni": userDni},
+            where: { "user_dni": userDni },
             relations: ['role_id'],
         });
         return user;
-     }
+    }
 
-      // Metodo para buscar un usuario por DNI y Phone. La relacion se indica en la clase Entity
-      async getUserByDniPhone(userDni: string): Promise<UserEntity>{
+    // Metodo para buscar un usuario por DNI y Phone. La relacion se indica en la clase Entity
+    async getUserByDniPhone(userDni: string): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
-            where: { "user_dni": userDni},
+            where: { "user_dni": userDni },
             relations: ['role_id'],
         });
-        if(!user){
+        if (!user) {
             return null;
         }
         return user;
-     }
+    }
 
-     // Metodo para buscar TODOS los usuarios. La relacion es. La que se indica en la clase Entity
-     async getUserList(): Promise<UserEntity[]>{
+    // Metodo para buscar TODOS los usuarios. La relacion es. La que se indica en la clase Entity
+    async getUserList(): Promise<UserEntity[]> {
         const userList = await this.userRepository.find({
             relations: ['role_id'],
         });
@@ -50,25 +50,25 @@ export class UserService {
     }
 
     // Metodo para crear un usuario
-    async createUser(createUserDTO: UserDTO): Promise<UserDTO>{
+    async createUser(createUserDTO: UserDTO): Promise<UserDTO> {
         const user = this.userRepository.save(createUserDTO);
         return user;
     }
 
-     // Metodo para actualizar un ususario
-     async updateUser(userId: number, userDTO: UserDTO): Promise<any>{
+    // Metodo para actualizar un ususario
+    async updateUser(userId: number, userDTO: UserDTO): Promise<any> {
         const updatedUser = await this.userRepository.update(userId, userDTO);
         return updatedUser;
     }
 
-     // Metodo para eliminar un usuario
-     async deleteUser(userId: number): Promise<UserDTO>{
+    // Metodo para eliminar un usuario
+    async deleteUser(userId: number): Promise<UserDTO> {
         const findUser = await this.getUserById(userId);
-        if(!findUser){
+        if (!findUser) {
             return null;
         }
         findUser.user_status = false;
-        await this.userRepository.update(userId,findUser);
+        await this.userRepository.update(userId, findUser);
         return findUser;
     }
 }
