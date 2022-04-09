@@ -19,7 +19,13 @@ export class ItemService {
 
     // Metodo para buscar TODOS los Items. La relacion es. La que se indica en la clase Entity
     async getItemList(): Promise<ItemEntity[]> {
-        const itemList = await this.itemRepository.find({});
+        const itemList = await this.itemRepository.find({
+            relations: ['category_id'],
+            order: {
+                'category_id': 'ASC',
+                'item_frequency': 'ASC'
+            }
+        });
         return itemList;
     }
 

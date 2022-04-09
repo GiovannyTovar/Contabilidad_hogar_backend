@@ -11,7 +11,7 @@ export class ItemController {
    async getItemList(@Res() res) {
        const itemList = await this.itemService.getItemList();
        if(itemList.length==0){
-           throw new NotFoundException('Item not found');
+           throw new NotFoundException('Items not found');
        }
        return res.status(HttpStatus.OK).send(itemList);
    }

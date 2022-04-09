@@ -12,6 +12,9 @@ export class IncomeController {
     @Get()
     async getIncomeList(@Res() res) {
         const incomeList = await this.incomeService.getIncomeList();
+        if(incomeList.length==0){
+            throw new NotFoundException("Incomes not found");
+        }
         return res.status(HttpStatus.OK).send(incomeList);
     }
 
@@ -19,6 +22,9 @@ export class IncomeController {
     @Get(':income_id')
     async getIncome(@Res() res, @Param('income_id') incomeId: number) {
         const income = await this.incomeService.getIncomeById(incomeId);
+        if(!income){
+            throw new NotFoundException("Income not found");
+        }
         return res.status(HttpStatus.OK).send(income);
     }
 
