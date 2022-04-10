@@ -13,6 +13,6 @@ export class UserRoleEntity{
     role_status: boolean;
 
     // Relacion Uno a Muchos con la entidad users
-    @OneToMany(type => UserEntity, usersList => usersList.role_id)
+    @OneToMany(type => UserEntity, usersList => usersList.roleIdroleId)
     usersList: UserEntity[];
 }
