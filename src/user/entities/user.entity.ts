@@ -20,5 +20,5 @@ export class UserEntity{
 
     // Relacion Muchos a Uno con la entidad user_role
     @ManyToOne(type => UserRoleEntity, role_id => role_id.usersList)
-    roleIdroleId: UserRoleEntity;
+    roleId: UserRoleEntity;
 }
