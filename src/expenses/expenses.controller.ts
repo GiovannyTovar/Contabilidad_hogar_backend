@@ -53,6 +53,8 @@ export class ExpensesController {
     // Metodo POST 
     @Post('add')
     async addExpense(@Res() res, @Body() createExpenseDTO: ExpensesDTO) {
+        const actualDate = new Date();
+        createExpenseDTO.expense_date=actualDate;
         const expense = await this.expenseService.createExpense(createExpenseDTO);
         return res.status(HttpStatus.CREATED).send(expense);
     }
