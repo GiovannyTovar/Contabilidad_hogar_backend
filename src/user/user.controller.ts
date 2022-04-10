@@ -3,7 +3,7 @@ import { Any } from 'typeorm';
 import { UserDTO } from './dtos/user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
     // Inicializar el servicio en el constructor
     constructor(private readonly userService: UserService) { }

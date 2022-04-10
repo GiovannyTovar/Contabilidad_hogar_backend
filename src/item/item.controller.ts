@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Po
 import { ItemDTO } from './dtos/item.dto';
 import { ItemService } from './item.service';
 
-@Controller('item')
+@Controller('items')
 export class ItemController {
     constructor(private readonly itemService: ItemService) { }
 

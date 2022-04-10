@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Po
 import { ItemCategoryDTO } from './dtos/item-category.dto';
 import { ItemCategoryService } from './item-category.service';
 
-@Controller('item-category')
+@Controller('item-categories')
 export class ItemCategoryController {
      // Inicializar el servicio en el constructor
      constructor(private readonly itemCategoryService: ItemCategoryService) { }

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Po
 import { UserRoleDTO } from './dtos/user-role.dto';
 import { UserRoleService } from './user-role.service';
 
-@Controller('user-role')
+@Controller('user-roles')
 export class UserRoleController {
 
     // Inicializar el servicio en el constructor

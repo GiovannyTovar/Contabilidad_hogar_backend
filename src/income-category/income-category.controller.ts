@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Po
 import { IncomeCategoryDTO } from './dtos/income-category.dto';
 import { IncomeCategoryService } from './income-category.service';
 
-@Controller('income-category')
+@Controller('income-categories')
 export class IncomeCategoryController {
     // Inicializar el servicio en el constructor
     constructor(private readonly incomeCategService: IncomeCategoryService) { }

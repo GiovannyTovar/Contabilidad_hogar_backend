@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Po
 import { IncomeDTO } from './dtos/income.dto';
 import { IncomeService } from './income.service';
 
-@Controller('income')
+@Controller('incomes')
 export class IncomeController {
 
     // Inicializar el servicio en el constructor
