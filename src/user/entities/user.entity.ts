@@ -19,6 +19,6 @@ export class UserEntity{
     user_status: boolean;
 
     // Relacion Muchos a Uno con la entidad user_role
-    @ManyToOne(type => UserRoleEntity, role_id => role_id.usersList)
-    roleId: UserRoleEntity;
+    @ManyToOne(() => UserRoleEntity, (userRole) => userRole.users)
+    userRole: UserRoleEntity;
 }
