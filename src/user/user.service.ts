@@ -15,7 +15,7 @@ export class UserService {
     async getUserById(userId: number): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
             where: { "user_id": userId },
-            relations: ['role_id'],
+            relations: ['roleIdroleId'],
         });
         return user;
     }
@@ -24,7 +24,7 @@ export class UserService {
     async getUserByDni(userDni: string): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
             where: { "user_dni": userDni },
-            relations: ['role_id'],
+            relations: ['roleIdroleId'],
         });
         return user;
     }
@@ -33,7 +33,7 @@ export class UserService {
     async getUserByDniPhone(userDni: string): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
             where: { "user_dni": userDni },
-            relations: ['role_id'],
+            relations: ['roleIdroleId'],
         });
         if (!user) {
             return null;
@@ -44,7 +44,7 @@ export class UserService {
     // Metodo para buscar TODOS los usuarios. La relacion es. La que se indica en la clase Entity
     async getUserList(): Promise<UserEntity[]> {
         const userList = await this.userRepository.find({
-            relations: ['role_id'],
+            relations: ['roleIdroleId'],
         });
         return userList;
     }
