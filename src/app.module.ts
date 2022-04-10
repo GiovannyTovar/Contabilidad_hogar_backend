@@ -30,7 +30,7 @@ import { ExpensesEntity } from './expenses/entities/expenses.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mariadb',
+        type: 'mysql', //mariadb
         host: configService.get<string>(DB_HOST),
         port: +configService.get<number>(DB_PORT),
         username: configService.get<string>(DB_USER),
@@ -38,7 +38,7 @@ import { ExpensesEntity } from './expenses/entities/expenses.entity';
         database: configService.get<string>(DB_DATABASE),
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
         entities: [UserRoleEntity, UserEntity, ItemCategoryEntity, ItemEntity, IncomeCategoryEntity, IncomeEntity, ExpensesEntity],
-        synchronize: true, //true
+        //synchronize: true, //true. Usar solo en desarrollo, deshabilitar en produccion
       }),
       inject: [ConfigService],
     }),
