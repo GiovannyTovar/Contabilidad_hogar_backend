@@ -31,11 +31,11 @@ import { ExpensesEntity } from './expenses/entities/expenses.entity';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql', //mariadb
-        host: configService.get<string>(DB_HOST),
-        port: +configService.get<number>(DB_PORT),
-        username: configService.get<string>(DB_USER),
-        password: configService.get<string>(DB_PASSWORD),
-        database: configService.get<string>(DB_DATABASE),
+        host: 'bszb129cg2yub5qjp2jw-mysql.services.clever-cloud.com',
+        port: 3306,
+        username: 'uxp8bgepezn4clyt',
+        password: 'MXd3mDZk7KUrQbsdZPlD',
+        database: 'bszb129cg2yub5qjp2jw',
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
         entities: [UserRoleEntity, UserEntity, ItemCategoryEntity, ItemEntity, IncomeCategoryEntity, IncomeEntity, ExpensesEntity],
         //synchronize: true, //true. Usar solo en desarrollo, deshabilitar en produccion
