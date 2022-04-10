@@ -11,6 +11,9 @@ export class IncomeCategoryController {
     @Get()
     async getIncomeCList(@Res() res) {
         const incomeCList = await this.incomeCategService.getIncomeCList();
+        if(incomeCList.length==0){
+            throw new NotFoundException("Income Categories Not Found");
+        }
         return res.status(HttpStatus.OK).send(incomeCList);
     }
 
@@ -18,6 +21,9 @@ export class IncomeCategoryController {
     @Get(":incomec_id")
     async getIncomeC(@Res() res, @Param('incomec_id') incomecId: number) {
         const incomeC = await this.incomeCategService.getIncomeCById(incomecId);
+        if(!incomeC){
+            throw new NotFoundException("Income Category Not Found")
+        }
         return res.status(HttpStatus.OK).send(incomeC);
     }
 
@@ -40,7 +46,7 @@ export class IncomeCategoryController {
     async deleteIncomecId(@Res() res, @Param("incomec_id") incomeCId) {
         const deleteIncomeC = await this.incomeCategService.deleteIncomeC(incomeCId);
         if (!deleteIncomeC) {
-            throw new NotFoundException('Incme Category not found');
+            throw new NotFoundException('Income Category not found');
         }
         return res.status(HttpStatus.OK).send(deleteIncomeC);
     }
