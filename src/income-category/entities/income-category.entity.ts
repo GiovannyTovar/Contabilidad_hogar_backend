@@ -15,6 +15,6 @@ export class IncomeCategoryEntity{
 
     // Relacion Uno a Muchos con la entidad income
     @OneToMany(type => IncomeEntity, incomeList => incomeList.incomeCategory)
-    incomeL: IncomeEntity[];
+    income: IncomeEntity[];
     
 }

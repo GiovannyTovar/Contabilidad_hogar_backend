@@ -17,7 +17,7 @@ export class ExpensesController {
         return res.status(HttpStatus.OK).send(expensesList);
     }
 
-    // Metodo Get con parametro para buscar un ingreso por id
+    // Metodo Get con parametro para buscar un gasto por id
     @Get(':expense_id')
     async getExpense(@Res() res, @Param('expense_id') expenseId: number) {
         const expense = await this.expenseService.getExpenseById(expenseId);
@@ -27,24 +27,24 @@ export class ExpensesController {
         return res.status(HttpStatus.OK).send(expense);
     }
 
-    // Metodo Get con parametro para buscar ingresos del mes actual
+    // Metodo Get con parametro para buscar gastos del dia actual
     @Get('/find/today-expenses')
     async getTodayExpenses(@Res() res) {
         const expensesList = await this.expenseService.getTodayExpenses();
-        if(expensesList == null){
-            throw new NotFoundException('Today Incomes not found');
+        if(expensesList.length == 0){
+            throw new NotFoundException('Today Expenses not found');
         }else{
             return res.status(HttpStatus.OK).send(expensesList);
         }
     }
 
-    // Metodo Get con parametros para buscar ingresos dentro de un rango de fechas
+    // Metodo Get con parametros para buscar gastos dentro de un rango de fechas
     @Get('/find/start/:startDate/end/:endDate')
     async getRangeExpenses(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
         console.log("Fecha = "+startDate+ " " + endDate);
         const expensesList = await this.expenseService.getRangeExpenses(startDate, endDate);
-        if(expensesList == null){
-            throw new NotFoundException('Expenses not found');
+        if(expensesList.length == 0){
+            throw new NotFoundException('Expenses by range not found');
         }else{
             return res.status(HttpStatus.OK).send(expensesList);
         }

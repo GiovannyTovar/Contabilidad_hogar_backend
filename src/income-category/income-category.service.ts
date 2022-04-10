@@ -13,7 +13,7 @@ export class IncomeCategoryService {
     async getIncomeCById(incomecId: number): Promise<IncomeCategoryEntity> {
         const incomec = await this.incomeCategoRespository.findOne({
             where: { "income_c_id": incomecId },
-            relations: ['incomeL'],
+            relations: ['income'],
         });
         return incomec;
     }
@@ -21,7 +21,7 @@ export class IncomeCategoryService {
     // Metodo para buscar TODAS las  categorias de entradas. La relacion es. La que se indica en la clase Entity
     async getIncomeCList(): Promise<IncomeCategoryEntity[]> {
         const incomecList = await this.incomeCategoRespository.find({
-            relations: ['incomeL'],
+            relations: ['income'],
         });
         return incomecList;
     }

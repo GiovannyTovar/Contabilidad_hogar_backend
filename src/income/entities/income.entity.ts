@@ -15,7 +15,7 @@ export class IncomeEntity{
     income_value: number;
 
     //Relacion Muchos a Uno con la entidad income_category
-    @ManyToOne(type => IncomeCategoryEntity, incomeCategory => incomeCategory.incomeL)
+    @ManyToOne(type => IncomeCategoryEntity, incomeCategory => incomeCategory.income)
     incomeCategory: IncomeCategoryEntity;
     
 

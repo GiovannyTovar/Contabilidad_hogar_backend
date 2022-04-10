@@ -19,10 +19,11 @@ export class ItemEntity{
 
     
     // Relacion Muchos a Uno con la entidad item_category
-    @ManyToOne(type => ItemCategoryEntity, category => category.itemsList)
-    category_id: ItemCategoryEntity;    
+    @ManyToOne(type => ItemCategoryEntity, category => category.items)
+    itemCategory: ItemCategoryEntity;    
 
     // Relacion Uno a muchos con la entidad expenses
-    @OneToMany(type => ExpensesEntity, expensesList => expensesList.item_id)
-    expensesList: ExpensesEntity[];
+    @OneToMany(type => ExpensesEntity, expensesList => expensesList.item)
+    expenses: ExpensesEntity[];
+
 }

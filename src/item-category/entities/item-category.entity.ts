@@ -14,7 +14,8 @@ export class ItemCategoryEntity{
 
     
     // Relacion Uno a Muchos con la entidad items
-    @OneToMany(type => ItemEntity, itemsList => itemsList.category_id)
-    itemsList: ItemEntity[];
+    @OneToMany(type => ItemEntity, itemsList => itemsList.itemCategory)
+    items: ItemEntity[];
+
     
 }

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { IncomeDTO } from './dtos/income.dto';
 import { IncomeEntity } from './entities/income.entity';
-import { MoreThanOrEqual, Between  } from "typeorm";
+import { MoreThanOrEqual, Between } from "typeorm";
 
 @Injectable()
 export class IncomeService {
@@ -24,42 +24,30 @@ export class IncomeService {
         const incomeList = await this.incomeRespository.find({
             relations: ['incomeCategory'],
         });
-        if(incomeList.length == 0){
-            return null;
-        }else{
-            return incomeList;
-        }
+        return incomeList;
     }
 
     // Metodo para buscar los ingresos del mes actual
-    async getRecentIncomes(): Promise<IncomeEntity[]>{
+    async getRecentIncomes(): Promise<IncomeEntity[]> {
         const date = new Date();
-        const incomeList = await this.incomeRespository.find({            
+        const incomeList = await this.incomeRespository.find({
             relations: ['incomeCategory'],
             where: {
-            income_date: MoreThanOrEqual((date.getFullYear())+"-"+(date.getMonth()+1)+"-01 00:00:00")         
+                income_date: MoreThanOrEqual((date.getFullYear()) + "-" + (date.getMonth() + 1) + "-01 00:00:00")
             }
         });
-        if(incomeList.length == 0){
-            return null;
-        }else{
-            return incomeList;
-        }
+        return incomeList;
     }
 
     // Metodo para buscar los ingresos dentro de un rango de fechas
-    async getRangeIncomes(startDate: string, endDate: string): Promise<IncomeEntity[]>{
-        const incomeList = await this.incomeRespository.find({            
+    async getRangeIncomes(startDate: string, endDate: string): Promise<IncomeEntity[]> {
+        const incomeList = await this.incomeRespository.find({
             relations: ['incomeCategory'],
             where: {
-            income_date: Between(startDate, endDate)       
+                income_date: Between(startDate, endDate)
             }
         });
-        if(incomeList.length == 0){
-            return null;
-        }else{
-            return incomeList;
-        }
+        return incomeList;
     }
 
     // Metodo para crear un ingreso

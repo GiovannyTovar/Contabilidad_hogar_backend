@@ -8,56 +8,44 @@ import { ExpensesEntity } from './entities/expenses.entity';
 export class ExpensesService {
     constructor(@InjectRepository(ExpensesEntity) private readonly expenseRespository: Repository<ExpensesEntity>) { }
 
-     // Metodo para buscar un gasto por ID La relacion se indica en la clase Entity
-     async getExpenseById(expenseId: number): Promise<ExpensesEntity> {
+    // Metodo para buscar un gasto por ID La relacion se indica en la clase Entity
+    async getExpenseById(expenseId: number): Promise<ExpensesEntity> {
         const expense = await this.expenseRespository.findOne({
             where: { "expense_id": expenseId },
         });
         return expense;
     }
 
-     // Metodo para buscar TODOS los gastos. La relacion es. La que se indica en la clase Entity
-     async getExpenseList(): Promise<ExpensesEntity[]> {
+    // Metodo para buscar TODOS los gastos. La relacion es. La que se indica en la clase Entity
+    async getExpenseList(): Promise<ExpensesEntity[]> {
         const expensesList = await this.expenseRespository.find({
         });
-        if(expensesList.length == 0){
-            return null;
-        }else{
-            return expensesList;
-        }
+        return expensesList;
     }
 
-    // Metodo para buscar los gastos del dia actual
-    async getTodayExpenses(): Promise<ExpensesEntity[]>{
+    // Metodo para buscar los gastos del dia actual. La relacion es la que se indica en Entity
+    async getTodayExpenses(): Promise<ExpensesEntity[]> {
         const date = new Date();
-        const expensesList = await this.expenseRespository.find({           
-            relations: ['item_id'],
+        const expensesList = await this.expenseRespository.find({
+            relations: ['item'],
             where: {
-            expense_date: Between((date.getFullYear())+"-"+(date.getMonth()+1)+"-"+(date.getDate())+" 00:00:00", (date.getFullYear())+"-"+(date.getMonth()+1)+"-"+(date.getDate())+" 23:59:59")         
+                expense_date: Between((date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " 00:00:00", (date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " 23:59:59")
             },
             order: {
                 'expense_id': 'DESC'
             }
         });
-        if(expensesList.length == 0){
-            return null;
-        }else{
-            return expensesList;
-        }
+        return expensesList;
     }
 
     // Metodo para buscar los gastos dentro de un rango de fechas
-    async getRangeExpenses(startDate: string, endDate: string): Promise<ExpensesEntity[]>{
-        const expensesList = await this.expenseRespository.find({  
+    async getRangeExpenses(startDate: string, endDate: string): Promise<ExpensesEntity[]> {
+        const expensesList = await this.expenseRespository.find({
             where: {
-            expense_date: Between(startDate, endDate)       
+                expense_date: Between(startDate, endDate)
             }
         });
-        if(expensesList.length == 0){
-            return null;
-        }else{
-            return expensesList;
-        }
+        return expensesList;
     }
 
     // Metodo para registrar un gasto

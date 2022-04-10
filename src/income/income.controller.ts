@@ -32,8 +32,8 @@ export class IncomeController {
     @Get('/find/current-month')
     async getRecentIncome(@Res() res) {
         const incomeList = await this.incomeService.getRecentIncomes();
-        if(incomeList == null){
-            throw new NotFoundException('Income not found');
+        if(incomeList.length == 0){
+            throw new NotFoundException('Incomes of the month not found');
         }else{
             return res.status(HttpStatus.OK).send(incomeList);
         }
@@ -42,10 +42,9 @@ export class IncomeController {
     // Metodo Get con parametros para buscar ingresos dentro de un rango de fechas
     @Get('/find/start/:startDate/end/:endDate')
     async getRangeIncome(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
-        console.log("Fecha = "+startDate+ " " + endDate);
         const incomeList = await this.incomeService.getRangeIncomes(startDate, endDate);
-        if(incomeList == null){
-            throw new NotFoundException('Incomes not found');
+        if(incomeList.length == 0){
+            throw new NotFoundException('Incomes by range not found');
         }else{
             return res.status(HttpStatus.OK).send(incomeList);
         }

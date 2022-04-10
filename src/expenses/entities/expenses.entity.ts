@@ -14,8 +14,8 @@ export class ExpensesEntity{
     expense_value: number;
 
     // Relacion Muchos a Uno con la etidad items
-    @ManyToOne(type => ItemEntity, itemId => itemId.expensesList)
-    item_id: ItemEntity;
+    @ManyToOne(type => ItemEntity, itemId => itemId.expenses)
+    item: ItemEntity;
 
     // No genera relacion, solo uardar el id del usuario que creo el registro
     @Column()
