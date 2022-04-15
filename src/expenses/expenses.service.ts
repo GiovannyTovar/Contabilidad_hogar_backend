@@ -11,7 +11,7 @@ export class ExpensesService {
     // Metodo para buscar un gasto por ID La relacion se indica en la clase Entity
     async getExpenseById(expenseId: number): Promise<ExpensesEntity> {
         const expense = await this.expenseRespository.findOne({
-            relations: ['item'],
+            relations: ['item','expensesUpdate'],
             where: { "expense_id": expenseId },
         });
         return expense;
@@ -20,7 +20,7 @@ export class ExpensesService {
     // Metodo para buscar TODOS los gastos. La relacion es. La que se indica en la clase Entity
     async getExpenseList(): Promise<ExpensesEntity[]> {
         const expensesList = await this.expenseRespository.find({
-            relations: ['item'],
+            relations: ['item','expensesUpdate'],
         });
         return expensesList;
     }

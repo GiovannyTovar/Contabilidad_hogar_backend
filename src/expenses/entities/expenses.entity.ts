@@ -1,5 +1,6 @@
+import { ExpensesUpdateEtity } from "src/expenses-update/entities/expenses-update.entity";
 import { ItemEntity } from "src/item/entities/item.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("expenses")
 export class ExpensesEntity{
@@ -16,6 +17,10 @@ export class ExpensesEntity{
     // Relacion Muchos a Uno con la etidad items
     @ManyToOne(type => ItemEntity, itemId => itemId.expenses)
     item: ItemEntity;
+
+    //Relacion Uno a Muchos con la entidad expenses_update
+    @OneToMany(type => ExpensesUpdateEtity, expenseUpdate => expenseUpdate.expenses)
+    expensesUpdate: ExpensesUpdateEtity[];        
 
     // No genera relacion, solo uardar el id del usuario que creo el registro
     @Column()
