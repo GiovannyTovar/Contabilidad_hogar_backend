@@ -29,7 +29,7 @@ export class ExpensesService {
     async getTodayExpenses(): Promise<ExpensesEntity[]> {
         const date = new Date();
         const expensesList = await this.expenseRespository.find({
-            relations: ['item'],
+            relations: ['item','expensesUpdate'],
             where: {
                 expense_date: Between((date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " 00:00:00", (date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " 23:59:59")
             },
