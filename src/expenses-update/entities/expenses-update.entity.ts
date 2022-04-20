@@ -2,7 +2,7 @@ import { ExpensesEntity } from "src/expenses/entities/expenses.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('expenses_update')
-export class ExpensesUpdateEtity{
+export class ExpensesUpdateEntity{
     
     @PrimaryGeneratedColumn()
     update_id: number;
