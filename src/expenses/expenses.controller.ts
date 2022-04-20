@@ -64,7 +64,7 @@ export class ExpensesController {
     @Put('update/:expense_id')
     async updateExpense(@Res() res, @Param('expense_id') expenseId, @Body() expenseUpdateDTO: ExpenseUpdateDTO){
         const expenseUpdate = await this.expenseService.updateExpense(expenseId,expenseUpdateDTO);
-        if(!expenseUpdate || expenseUpdate===null){
+        if(!expenseUpdate){
             throw new Error("Error to Update Expense. Please contacto to Admin");
         }
         return res.status(HttpStatus.OK).send(expenseUpdate);

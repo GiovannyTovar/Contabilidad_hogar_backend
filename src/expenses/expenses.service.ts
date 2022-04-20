@@ -82,7 +82,7 @@ export class ExpensesService {
                 createExpensesUpdateDTO.update_date = updateDate;
                 const expenseUpdate = await this.expenseUpdateRepository.save(createExpensesUpdateDTO);
                 if(expenseUpdate){
-                    return updatedExpense; // Devolver el gasto actualizado 
+                    return findExpense; // Devolver el gasto actualizado 
                 }else{
                     return null; // Se actualizo el gasto, pero no se creo el registro de actualizacion
                 }
