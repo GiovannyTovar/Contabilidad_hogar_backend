@@ -1,4 +1,5 @@
-import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
+import { ExpenseUpdateDTO } from './dtos/expense-update.dto';
 import { ExpensesDTO } from './dtos/expenses.dto';
 import { ExpensesService } from './expenses.service';
 
@@ -57,5 +58,15 @@ export class ExpensesController {
         createExpenseDTO.expense_date=actualDate;
         const expense = await this.expenseService.createExpense(createExpenseDTO);
         return res.status(HttpStatus.CREATED).send(expense);
+    }
+
+    // Metodo PUT
+    @Put('update/:expense_id')
+    async updateExpense(@Res() res, @Param('expense_id') expenseId, @Body() expenseUpdateDTO: ExpenseUpdateDTO){
+        const expenseUpdate = await this.expenseService.updateExpense(expenseId,expenseUpdateDTO);
+        if(!expenseUpdate || expenseUpdate===null){
+            throw new Error("Error to Update Expense. Please contacto to Admin");
+        }
+        return res.status(HttpStatus.OK).send(expenseUpdate);
     }
 }
