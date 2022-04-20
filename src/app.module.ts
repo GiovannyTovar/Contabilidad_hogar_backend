@@ -20,7 +20,7 @@ import { IncomeCategoryEntity } from './income-category/entities/income-category
 import { IncomeEntity } from './income/entities/income.entity';
 import { ExpensesEntity } from './expenses/entities/expenses.entity';
 import { ExpensesUpdateModule } from './expenses-update/expenses-update.module';
-import { ExpensesUpdateEtity } from './expenses-update/entities/expenses-update.entity';
+import { ExpensesUpdateEntity } from './expenses-update/entities/expenses-update.entity';
 
 @Module({
   imports: [
@@ -39,7 +39,7 @@ import { ExpensesUpdateEtity } from './expenses-update/entities/expenses-update.
         password: configService.get<string>(DB_PASSWORD),
         database: configService.get<string>(DB_DATABASE),
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
-        entities: [UserRoleEntity, UserEntity, ItemCategoryEntity, ItemEntity, IncomeCategoryEntity, IncomeEntity, ExpensesEntity, ExpensesUpdateEtity],
+        entities: [UserRoleEntity, UserEntity, ItemCategoryEntity, ItemEntity, IncomeCategoryEntity, IncomeEntity, ExpensesEntity, ExpensesUpdateEntity],
         //synchronize: true, //true. Usar solo en desarrollo, deshabilitar en produccion
       }),
       inject: [ConfigService],
