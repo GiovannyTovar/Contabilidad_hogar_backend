@@ -1,3 +1,4 @@
+import { ExpensesDTO } from "src/expenses/dtos/expenses.dto";
 import { IExpensesUpdate } from "../interfaces/expenses-update.interface";
 
 export class CreateExpensesUpdateDTO implements IExpensesUpdate{
@@ -7,4 +8,5 @@ export class CreateExpensesUpdateDTO implements IExpensesUpdate{
     update_posvalue: number;
     update_date: Date;
     user_id: number;
+    expenses: ExpensesDTO;
 }

@@ -73,6 +73,7 @@ export class ExpensesService {
             if(updatedExpense){
                 // SI el gasto se actualiza OK, crear el registro de actualizacion
                 let createExpensesUpdateDTO: CreateExpensesUpdateDTO = new CreateExpensesUpdateDTO();
+                createExpensesUpdateDTO.expenses.expense_id = expenseId;
                 createExpensesUpdateDTO.update_prevalue = prevalue;
                 createExpensesUpdateDTO.update_posvalue = expenseUpdateDTO.expense_value;
                 createExpensesUpdateDTO.update_description = expenseUpdateDTO.update_description;

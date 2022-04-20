@@ -1,3 +1,5 @@
+import { ExpensesDTO } from "src/expenses/dtos/expenses.dto";
+
 export interface IExpensesUpdate{
     readonly update_id?: number;
     readonly update_description: string;
@@ -5,4 +7,5 @@ export interface IExpensesUpdate{
     readonly update_posvalue: number;
     readonly update_date: Date;
     readonly user_id: number;
+    expenses: ExpensesDTO;
 }
