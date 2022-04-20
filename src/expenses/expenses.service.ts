@@ -65,15 +65,14 @@ export class ExpensesService {
     async updateExpense(expenseId: number, expenseUpdateDTO: ExpenseUpdateDTO): Promise<any> {
         // Buscar el gasto ORIGINAL para saber el valor antes de actualizarlo.
         const findExpense = await this.expenseRespository.findOne(expenseId);
-        var prevalue: number=0;
         if(findExpense){
             // Si el gasto existe, cambiarle el antiguo valor por el nuevo valor y actualizarlo
-            prevalue = findExpense.expense_value;
+            var prevalue = findExpense.expense_value;
             findExpense.expense_value = expenseUpdateDTO.expense_value;
             const updatedExpense = await this.expenseRespository.update(expenseId, findExpense);
             if(updatedExpense){
                 // SI el gasto se actualiza OK, crear el registro de actualizacion
-                let createExpensesUpdateDTO: CreateExpensesUpdateDTO ;
+                let createExpensesUpdateDTO: CreateExpensesUpdateDTO = new CreateExpensesUpdateDTO();
                 createExpensesUpdateDTO.update_prevalue = prevalue;
                 createExpensesUpdateDTO.update_posvalue = expenseUpdateDTO.expense_value;
                 createExpensesUpdateDTO.update_description = expenseUpdateDTO.update_description;
