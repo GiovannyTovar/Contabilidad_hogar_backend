@@ -29,7 +29,7 @@ export class IncomeService {
 
     // Metodo para buscar los ingresos del mes actual
     async getRecentIncomes(): Promise<IncomeEntity[]> {
-        const date = new Date();
+        const date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
         const incomeList = await this.incomeRespository.find({
             relations: ['incomeCategory'],
             where: {

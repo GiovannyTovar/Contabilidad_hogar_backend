@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
+import { Body, ConflictException, Controller, Get, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
 import { ExpenseUpdateDTO } from './dtos/expense-update.dto';
 import { ExpensesDTO } from './dtos/expenses.dto';
 import { ExpensesService } from './expenses.service';
@@ -42,7 +42,7 @@ export class ExpensesController {
     // Metodo Get con parametros para buscar gastos dentro de un rango de fechas
     @Get('/find/start/:startDate/end/:endDate')
     async getRangeExpenses(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
-        console.log("Fecha = "+startDate+ " " + endDate);
+        //console.log("Fecha = "+startDate+ " " + endDate);
         const expensesList = await this.expenseService.getRangeExpenses(startDate, endDate);
         if(expensesList.length == 0){
             throw new NotFoundException('Expenses by range not found');
@@ -54,9 +54,12 @@ export class ExpensesController {
     // Metodo POST 
     @Post('add')
     async addExpense(@Res() res, @Body() createExpenseDTO: ExpensesDTO) {
-        const actualDate = new Date();
+        const actualDate = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
         createExpenseDTO.expense_date=actualDate;
         const expense = await this.expenseService.createExpense(createExpenseDTO);
+        if(!expense){
+            throw new ConflictException("Expense Not Creadted, please contact to Admin"); 
+        }
         return res.status(HttpStatus.CREATED).send(expense);
     }
 
@@ -65,7 +68,7 @@ export class ExpensesController {
     async updateExpense(@Res() res, @Param('expense_id') expenseId, @Body() expenseUpdateDTO: ExpenseUpdateDTO){
         const expenseUpdate = await this.expenseService.updateExpense(expenseId,expenseUpdateDTO);
         if(!expenseUpdate){
-            throw new Error("Error to Update Expense. Please contacto to Admin");
+            throw new ConflictException("Error to Update Expense. Please contacto to Admin");
         }
         return res.status(HttpStatus.OK).send(expenseUpdate);
     }

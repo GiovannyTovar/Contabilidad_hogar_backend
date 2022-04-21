@@ -31,7 +31,7 @@ export class ExpensesService {
 
     // Metodo para buscar los gastos del dia actual. La relacion es la que se indica en Entity
     async getTodayExpenses(): Promise<ExpensesEntity[]> {
-        const date = new Date();
+        const date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
         const expensesList = await this.expenseRespository.find({
             relations: ['item','expensesUpdate'],
             where: {
