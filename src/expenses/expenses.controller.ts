@@ -54,8 +54,7 @@ export class ExpensesController {
     // Metodo POST 
     @Post('add')
     async addExpense(@Res() res, @Body() createExpenseDTO: ExpensesDTO) {
-        const actualDate = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
-        createExpenseDTO.expense_date=actualDate;
+        createExpenseDTO.expense_date=new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
         const expense = await this.expenseService.createExpense(createExpenseDTO);
         if(!expense){
             throw new ConflictException("Expense Not Creadted, please contact to Admin"); 

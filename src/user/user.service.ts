@@ -26,15 +26,6 @@ export class UserService {
             where: { "user_dni": userDni },
             relations: ['userRole'],
         });
-        return user;
-    }
-
-    // Metodo para buscar un usuario por DNI y Phone. La relacion se indica en la clase Entity
-    async getUserByDniPhone(userDni: string): Promise<UserEntity> {
-        const user = await this.userRepository.findOne({
-            where: { "user_dni": userDni },
-            relations: ['userRole'],
-        });
         if (!user) {
             return null;
         }

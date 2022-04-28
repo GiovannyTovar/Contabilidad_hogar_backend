@@ -78,8 +78,8 @@ export class ExpensesService {
                 createExpensesUpdateDTO.update_posvalue = expenseUpdateDTO.expense_value;
                 createExpensesUpdateDTO.update_description = expenseUpdateDTO.update_description;
                 createExpensesUpdateDTO.user_id = expenseUpdateDTO.user_id;
-                let updateDate: Date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
-                createExpensesUpdateDTO.update_date = updateDate;
+                //let updateDate: Date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
+                createExpensesUpdateDTO.update_date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}))
                 const expenseUpdate = await this.expenseUpdateRepository.save(createExpensesUpdateDTO);
                 if(expenseUpdate){
                     return findExpense; // Devolver el gasto actualizado 
