@@ -42,7 +42,6 @@ export class ExpensesController {
     // Metodo Get con parametros para buscar gastos dentro de un rango de fechas
     @Get('/find/start/:startDate/end/:endDate')
     async getRangeExpenses(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
-        //console.log("Fecha = "+startDate+ " " + endDate);
         const expensesList = await this.expenseService.getRangeExpenses(startDate, endDate);
         if(expensesList.length == 0){
             throw new NotFoundException('Expenses by range not found');
