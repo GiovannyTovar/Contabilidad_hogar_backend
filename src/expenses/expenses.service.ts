@@ -49,7 +49,7 @@ export class ExpensesService {
         const expensesList = await this.expenseRespository.find({
             relations: ['item','expensesUpdate'],
             where: {
-                expense_date: Between(startDate, endDate)
+                expense_date: Between(startDate, endDate+" 23:59:59")
             },
             order: {
                 'expense_id': 'DESC'

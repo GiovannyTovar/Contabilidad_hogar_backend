@@ -44,7 +44,7 @@ export class IncomeService {
         const incomeList = await this.incomeRespository.find({
             relations: ['incomeCategory'],
             where: {
-                income_date: Between(startDate, endDate)
+                income_date: Between(startDate, endDate+" 23:59:59")
             }
         });
         return incomeList;
