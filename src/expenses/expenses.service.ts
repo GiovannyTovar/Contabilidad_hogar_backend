@@ -60,7 +60,7 @@ export class ExpensesService {
 
     // Para obtener el total del valor de cada categoria de gasto para las estadisticas
     async getCurrentMonthExpenses(){
-        let [sum] = await this.expenseRespository
+        let sum = await this.expenseRespository
         .createQueryBuilder("expenses")
         .select("c.category_name","categoria")
         .addSelect("SUM(expenses.expense_value)","total")
