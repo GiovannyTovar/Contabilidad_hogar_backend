@@ -64,7 +64,7 @@ export class ExpensesService {
         .createQueryBuilder("expenses")
         .select("c.category_name")
         .addSelect("SUM(expenses.expense_value)","total")
-        .innerJoin("item","b")
+        .innerJoin("items","b")
         .innerJoin("itemCategory","c")
         .groupBy("c.category_id")
         .getRawMany();
