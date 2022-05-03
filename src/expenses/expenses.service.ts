@@ -58,6 +58,17 @@ export class ExpensesService {
         return expensesList;
     }
 
+    // Para obtener el total del valor de cada categoria de gasto para las estadisticas
+    async getCurrentMonthExpenses(){
+        let [sum] = await this.expenseRespository
+        .createQueryBuilder("expenses")
+        .select("expenses.item.itemCategory.category_name")
+        .addSelect("SUM(expenses.expense_value)","total")
+        .groupBy("expenses.item.itemCategory.category_id")
+        .getRawMany();
+        return sum;
+    }
+
     // Metodo para registrar un gasto
     async createExpense(createExpenseDTO: ExpensesDTO): Promise<ExpensesDTO> {
         const expense = this.expenseRespository.save(createExpenseDTO);

@@ -50,6 +50,15 @@ export class ExpensesController {
         }
     }
 
+    @Get('/find/stadistics')
+    async getCurrentMonthExpenses(@Res() res){
+        const totalExpensesEstadistics = await this.expenseService.getCurrentMonthExpenses();
+        if(totalExpensesEstadistics){
+            return res.status(HttpStatus.OK).send(totalExpensesEstadistics);
+        }
+        throw new NotFoundException("Error al buscar estadisticas");
+    }
+
     // Metodo POST 
     @Post('add')
     async addExpense(@Res() res, @Body() createExpenseDTO: ExpensesDTO) {
