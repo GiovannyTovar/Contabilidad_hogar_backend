@@ -52,7 +52,7 @@ export class ExpensesController {
 
     @Get('/find/stadistics')
     async getCurrentMonthExpenses(@Res() res){
-        const totalExpensesEstadistics = await this.expenseService.getCurrentMonthExpenses();
+        const [totalExpensesEstadistics] = await this.expenseService.getCurrentMonthExpenses();
         if(totalExpensesEstadistics){
             return res.status(HttpStatus.OK).send(totalExpensesEstadistics);
         }
