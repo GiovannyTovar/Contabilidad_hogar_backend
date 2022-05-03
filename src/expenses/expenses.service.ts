@@ -62,9 +62,11 @@ export class ExpensesService {
     async getCurrentMonthExpenses(){
         let [sum] = await this.expenseRespository
         .createQueryBuilder("expenses")
-        .select("expenses.item.itemCategory.category_name")
+        .select("c.category_name")
         .addSelect("SUM(expenses.expense_value)","total")
-        .groupBy("expenses.item.itemCategory.category_id")
+        .innerJoin("item","b")
+        .innerJoin("itemCategory","c")
+        .groupBy("c.category_id")
         .getRawMany();
         return sum;
     }
