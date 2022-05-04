@@ -50,7 +50,7 @@ export class ExpensesController {
         }
     }
 
-    @Get('/find/statistics')
+    @Get('/find/statistics/current-month')
     async getCurrentMonthExpensesStatistics(@Res() res){
         const totalExpensesEstatistics = await this.expenseService.getCurrentMonthExpensesStatistics();
         if(totalExpensesEstatistics){
