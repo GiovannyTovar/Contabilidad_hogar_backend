@@ -58,16 +58,44 @@ export class ExpensesService {
         return expensesList;
     }
 
-    // Para obtener el total del valor de cada categoria de gasto para las estadisticas
-    async getCurrentMonthExpenses(){
+    // Para obtener el total del valor de cada categoria de gasto para las estadisticas del mes actual
+    // Devuelve datos sin Procesar. No entidades
+    async getCurrentMonthExpensesStatistics(){
+        let date: Date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        date.setDate(1);
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
         let sum = await this.expenseRespository
         .createQueryBuilder("expenses")
-        .innerJoinAndSelect("items","b")
-        .innerJoinAndSelect("item_category","c")
-        .select("c.category_name","categoria")
+        .select("c.category_name","Categoria")
+        //.addSelect("COUNT(itemItemId)","cantidad")
         .addSelect("SUM(expense_value)","total")
+        .innerJoin("items","b", "expenses.itemItemId = b.item_id")
+        .innerJoin("item_category","c","b.itemCategoryCategoryId = c.category_id")
+        .where("expenses.expense_date > :sql", {sql: date})
         .groupBy("c.category_id")
-        .getRawMany();
+        .limit(500)
+        .getRawMany(); // Como no son entidados sino datos sin procesar, se usagetRawMany()
+        console.log(sum)
+        return sum;
+    }
+
+    // Para obtener el total del valor de cada categoria de gasto para las estadisticas de un rango de fechas
+    // Devuelve datos sin Procesar. No entidades
+    async getRangeExpensesStatistics(startDate: string, endDate: string){
+        let sum = await this.expenseRespository
+        .createQueryBuilder("expenses")
+        .select("c.category_name","Categoria")
+        //.addSelect("COUNT(itemItemId)","cantidad")
+        .addSelect("SUM(expense_value)","total")
+        .innerJoin("items","b", "expenses.itemItemId = b.item_id")
+        .innerJoin("item_category","c","b.itemCategoryCategoryId = c.category_id")
+        .where("expenses.expense_date BETWEEN :start AND :end ", {start: (startDate+" 00:00:00"), end: (endDate+" 23:59:59")})
+        .groupBy("c.category_id")
+        .limit(500)
+        .getRawMany(); // Como no son entidades sino datos sin procesar, se usagetRawMany()
+        console.log(sum)
         return sum;
     }
 

@@ -50,13 +50,22 @@ export class ExpensesController {
         }
     }
 
-    @Get('/find/stadistics')
-    async getCurrentMonthExpenses(@Res() res){
-        const totalExpensesEstadistics = await this.expenseService.getCurrentMonthExpenses();
-        if(totalExpensesEstadistics){
-            return res.status(HttpStatus.OK).send(totalExpensesEstadistics);
+    @Get('/find/statistics')
+    async getCurrentMonthExpensesStatistics(@Res() res){
+        const totalExpensesEstatistics = await this.expenseService.getCurrentMonthExpensesStatistics();
+        if(totalExpensesEstatistics){
+            return res.status(HttpStatus.OK).send(totalExpensesEstatistics);
         }
-        throw new NotFoundException("Error al buscar estadisticas");
+        throw new NotFoundException("Error to search current month statistics");
+    }
+
+    @Get('/find/statistics/start/:startDate/end/:endDate')
+    async getRangeExpensesStatidstics(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string){
+        const totalExpensesEstatistics = await this.expenseService.getRangeExpensesStatistics(startDate,endDate);
+        if(totalExpensesEstatistics){
+            return res.status(HttpStatus.OK).send(totalExpensesEstatistics);
+        }
+        throw new NotFoundException("Error to search statistics by range");
     }
 
     // Metodo POST 

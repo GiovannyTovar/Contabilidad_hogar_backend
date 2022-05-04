@@ -32,7 +32,7 @@ import { ExpensesUpdateEntity } from './expenses-update/entities/expenses-update
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql', //mariadb
+        type: 'mariadb', //mysql
         host: configService.get<string>(DB_HOST),
         port: +configService.get<number>(DB_PORT),
         username: configService.get<string>(DB_USER),
@@ -40,7 +40,7 @@ import { ExpensesUpdateEntity } from './expenses-update/entities/expenses-update
         database: configService.get<string>(DB_DATABASE),
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
         entities: [UserRoleEntity, UserEntity, ItemCategoryEntity, ItemEntity, IncomeCategoryEntity, IncomeEntity, ExpensesEntity, ExpensesUpdateEntity],
-        //synchronize: true, //true. Usar solo en desarrollo, deshabilitar en produccion
+        synchronize: true, //true. Usar solo en desarrollo, deshabilitar en produccion
       }),
       inject: [ConfigService],
     }),
