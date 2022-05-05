@@ -86,7 +86,7 @@ export class ExpensesService {
     async getRangeExpensesStatistics(startDate: string, endDate: string){
         let sum = await this.expenseRespository
         .createQueryBuilder("expenses")
-        .select("c.category_name","Categoria")
+        .select("c.category_name","category")
         //.addSelect("COUNT(itemItemId)","cantidad")
         .addSelect("SUM(expense_value)","total")
         .innerJoin("items","b", "expenses.itemItemId = b.item_id")
