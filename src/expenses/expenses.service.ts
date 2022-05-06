@@ -95,8 +95,28 @@ export class ExpensesService {
         .groupBy("c.category_id")
         .limit(500)
         .getRawMany(); // Como no son entidades sino datos sin procesar, se usagetRawMany()
-        console.log(sum)
         return sum;
+    }
+
+    //Metodo para obtener el top 5 items con mas valor
+    //Devuelve datos sin rocesar
+    async getTopFiveStatistics(){
+        let date: Date = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        date.setDate(1);
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        const topFive = await this.expenseRespository
+        .createQueryBuilder("expenses")
+        .select("b.item_name", "item")
+        .addSelect("SUM(expenses.expense_value)", "total")
+        .innerJoin("items","b","expenses.itemItemId = b.item_id")
+        .where("expenses.expense_date > :sql", {sql: date})
+        .groupBy("expenses.itemItemId")
+        .orderBy("expenses.expense_value","DESC")
+        .limit(5)
+        .getRawMany(); // Como no son entidades sino datos sin procesar, se usagetRawMany()
+        return topFive;
     }
 
     // Metodo para registrar un gasto

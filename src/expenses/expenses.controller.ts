@@ -12,7 +12,7 @@ export class ExpensesController {
     @Get()
     async getExpensesList(@Res() res) {
         const expensesList = await this.expenseService.getExpenseList();
-        if(expensesList.length==0){
+        if (expensesList.length == 0) {
             throw new NotFoundException("Expenses not found");
         }
         return res.status(HttpStatus.OK).send(expensesList);
@@ -22,7 +22,7 @@ export class ExpensesController {
     @Get(':expense_id')
     async getExpense(@Res() res, @Param('expense_id') expenseId: number) {
         const expense = await this.expenseService.getExpenseById(expenseId);
-        if(!expense){
+        if (!expense) {
             throw new NotFoundException("Expense not found");
         }
         return res.status(HttpStatus.OK).send(expense);
@@ -32,9 +32,9 @@ export class ExpensesController {
     @Get('/find/today-expenses')
     async getTodayExpenses(@Res() res) {
         const expensesList = await this.expenseService.getTodayExpenses();
-        if(expensesList.length == 0){
+        if (expensesList.length == 0) {
             throw new NotFoundException('Today Expenses not found');
-        }else{
+        } else {
             return res.status(HttpStatus.OK).send(expensesList);
         }
     }
@@ -43,47 +43,57 @@ export class ExpensesController {
     @Get('/find/start/:startDate/end/:endDate')
     async getRangeExpenses(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
         const expensesList = await this.expenseService.getRangeExpenses(startDate, endDate);
-        if(expensesList.length == 0){
+        if (expensesList.length == 0) {
             throw new NotFoundException('Expenses by range not found');
-        }else{
+        } else {
             return res.status(HttpStatus.OK).send(expensesList);
         }
     }
 
     @Get('/find/statistics/current-month')
-    async getCurrentMonthExpensesStatistics(@Res() res){
+    async getCurrentMonthExpensesStatistics(@Res() res) {
         const totalExpensesEstatistics = await this.expenseService.getCurrentMonthExpensesStatistics();
-        if(totalExpensesEstatistics){
+        if (totalExpensesEstatistics) {
             return res.status(HttpStatus.OK).send(totalExpensesEstatistics);
         }
         throw new NotFoundException("Error to search current month statistics");
     }
 
     @Get('/find/statistics/start/:startDate/end/:endDate')
-    async getRangeExpensesStatidstics(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string){
-        const totalExpensesEstatistics = await this.expenseService.getRangeExpensesStatistics(startDate,endDate);
-        if(totalExpensesEstatistics){
+    async getRangeExpensesStatidstics(@Res() res, @Param('startDate') startDate: string, @Param('endDate') endDate: string) {
+        const totalExpensesEstatistics = await this.expenseService.getRangeExpensesStatistics(startDate, endDate);
+        if (totalExpensesEstatistics) {
             return res.status(HttpStatus.OK).send(totalExpensesEstatistics);
         }
         throw new NotFoundException("Error to search statistics by range");
     }
 
+    @Get('/find/statistics/top/five')
+    async getTopFive(@Res() res) {
+        const getTopFive = await this.expenseService.getTopFiveStatistics();
+        if (getTopFive) {
+            return res.status(HttpStatus.OK).send(getTopFive);
+        } else {
+            throw new NotFoundException("Error, no se encontraron valores del top 5 items mas comprados")
+        }
+    }
+
     // Metodo POST 
     @Post('add')
     async addExpense(@Res() res, @Body() createExpenseDTO: ExpensesDTO) {
-        createExpenseDTO.expense_date=new Date(new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        createExpenseDTO.expense_date = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }));
         const expense = await this.expenseService.createExpense(createExpenseDTO);
-        if(!expense){
-            throw new ConflictException("Expense Not Creadted, please contact to Admin"); 
+        if (!expense) {
+            throw new ConflictException("Expense Not Creadted, please contact to Admin");
         }
         return res.status(HttpStatus.CREATED).send(expense);
     }
 
     // Metodo PUT
     @Put('update/:expense_id')
-    async updateExpense(@Res() res, @Param('expense_id') expenseId, @Body() expenseUpdateDTO: ExpenseUpdateDTO){
-        const expenseUpdate = await this.expenseService.updateExpense(expenseId,expenseUpdateDTO);
-        if(!expenseUpdate){
+    async updateExpense(@Res() res, @Param('expense_id') expenseId, @Body() expenseUpdateDTO: ExpenseUpdateDTO) {
+        const expenseUpdate = await this.expenseService.updateExpense(expenseId, expenseUpdateDTO);
+        if (!expenseUpdate) {
             throw new ConflictException("Error to Update Expense. Please contacto to Admin");
         }
         return res.status(HttpStatus.OK).send(expenseUpdate);
