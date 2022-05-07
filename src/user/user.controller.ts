@@ -1,5 +1,6 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Put, Res, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, Delete, Get, HttpStatus, NotAcceptableException, NotFoundException, Param, Post, Put, Res, UnauthorizedException } from '@nestjs/common';
 import { Any } from 'typeorm';
+import { UserUpdateDTO } from './dtos/user-update.dto';
 import { UserDTO } from './dtos/user.dto';
 import { UserService } from './user.service';
 
@@ -57,14 +58,20 @@ export class UserController {
     @Post("add")
     async addUser(@Res() res, @Body() createUserDTO: UserDTO) {
         const user = await this.userService.createUser(createUserDTO);
-        return res.status(HttpStatus.CREATED).send(user);
+        if (user) {
+            return res.status(HttpStatus.CREATED).send(user);
+        }
+        throw new ConflictException("User cant be created");
     }
 
     // Metodo Put
     @Put("update/:user_id")
-    async updateUser(@Res() res, @Param("user_id") userId: number, @Body() updateUserDTO: UserDTO) {
+    async updateUser(@Res() res, @Param("user_id") userId: number, @Body() updateUserDTO: UserUpdateDTO) {
         const updateUser = await this.userService.updateUser(userId, updateUserDTO);
-        return res.status(HttpStatus.OK).send(updateUser);
+        if(updateUser){
+            return res.status(HttpStatus.OK).send(updateUser);
+        }
+        throw new ConflictException("User cant be Updated");        
     }
 
     // Metodo Delete

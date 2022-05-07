@@ -29,6 +29,18 @@ export class ItemService {
         return itemList;
     }
 
+    // Metodo para buscar TODOS los Items activos. La relacion es. La que se indica en la clase Entity
+    async getActiveItemsList(): Promise<ItemEntity[]> {
+        const itemList = await this.itemRepository.find({
+            relations: ['itemCategory'],
+            where: {"item_status":true},
+            order: {
+                'item_frequency': 'ASC'
+            }
+        });
+        return itemList;
+    }
+
     // Metodo para crear un Item
     async createItem(createItemDTO: ItemDTO): Promise<ItemDTO> {
         const item = this.itemRepository.save(createItemDTO);

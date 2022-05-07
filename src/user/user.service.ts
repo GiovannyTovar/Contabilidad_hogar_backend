@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserUpdateDTO } from './dtos/user-update.dto';
 import { UserDTO } from './dtos/user.dto';
 import { UserEntity } from './entities/user.entity';
 
@@ -46,9 +47,9 @@ export class UserService {
         return user;
     }
 
-    // Metodo para actualizar un ususario
-    async updateUser(userId: number, userDTO: UserDTO): Promise<any> {
-        const updatedUser = await this.userRepository.update(userId, userDTO);
+    // Metodo para actualizar un usuario
+    async updateUser(userId: number, userUpdateDTO: UserUpdateDTO): Promise<any> {
+        const updatedUser = await this.userRepository.update(userId, userUpdateDTO);
         return updatedUser;
     }
 

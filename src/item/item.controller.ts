@@ -16,6 +16,16 @@ export class ItemController {
        return res.status(HttpStatus.OK).send(itemList);
    }
 
+   // Metodo Get para consumir ws obtener TODOS los items
+   @Get('/find/actives')
+   async getActiveItemsList(@Res() res) {
+       const itemList = await this.itemService.getActiveItemsList();
+       if(itemList.length==0){
+           throw new NotFoundException('Active Items not found');
+       }
+       return res.status(HttpStatus.OK).send(itemList);
+   }
+
    // Metodo Get con parametro para buscar un item especifico
    @Get(':item_id')
    async getItem(@Res() res, @Param('item_id') itemId: number) {

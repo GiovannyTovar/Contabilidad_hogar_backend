@@ -7,6 +7,5 @@ export class UserDTO implements IUser{
     user_name: string;
     user_phone: string;
     user_status: boolean;
-    role_id?: UserRoleEntity;
-
+    userRole?: UserRoleEntity;
 }
