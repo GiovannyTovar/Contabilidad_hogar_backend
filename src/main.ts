@@ -11,7 +11,7 @@ async function bootstrap() {
 
   //Configurar Server port dinamico desde el archivo src/config/constants  
   const port = +configService.get<number>(SERVER_PORT);
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || 3000, '0.0.0.0'); //0.0.0.0 es ¡Importante solo para Render!
   console.log(`listening on port = ${await app.getUrl()}`);
 }
 bootstrap();
